@@ -1,16 +1,20 @@
 using UnityEngine;
 
-public class FieldCollider : MonoBehaviour
+
+public class FieldCollider : MonoBehaviour, ICollider
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private GamePlayManager myGameManager;
+    private Collider myCollider;
+
+    private void Awake()
     {
-        
+        myCollider = gameObject.GetComponent<Collider>();
+    }
+    public void Colliding(int player)
+    {
+        myGameManager.TouchingGround(player, myCollider);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  
+
 }

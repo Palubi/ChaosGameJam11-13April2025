@@ -22,7 +22,7 @@ public class Ball : MonoBehaviour
     {   
         if (other.gameObject.TryGetComponent<ICollider>(out ICollider collider))
         {
-            collider.Colliding();
+            collider.Colliding(actualPlayer);
         }
     }
     private void FieldCollision()

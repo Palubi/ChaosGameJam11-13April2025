@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface ICollider
 {
-    public void Colliding();
+    public void Colliding(int player);
 }

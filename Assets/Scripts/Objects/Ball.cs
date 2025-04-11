@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Ball
+public class Ball : MonoBehaviour
 {
     [SerializeField] private GameObject player1;
     [SerializeField] private GameObject player2;
@@ -16,4 +16,17 @@ public class Ball
     // public lançar bola (int playernumber)
     // { actual player = player numebr }
     // 
+
+
+    private void OnTriggerEnter(Collider other)     //para mandar o tipo de collider
+    {   
+        if (other.gameObject.TryGetComponent<ICollider>(out ICollider collider))
+        {
+            collider.Colliding();
+        }
+    }
+    private void FieldCollision()
+    {
+        //if()
+    }
 }

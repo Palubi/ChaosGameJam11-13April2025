@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GamePlayManager
+public class GamePlayManager : MonoBehaviour
 {
     private int scorePoints = 0;
     private int ActualPoints = 0;
@@ -17,7 +17,7 @@ public class GamePlayManager
     private int actualPlayer = 0;
   
 
-    public void TouchingGround( int player, int otherplayer, Collider touchedCollider)
+    public void TouchingGround( int player, Collider touchedCollider)
     {
 
         if (touchedCollider == leftInCollider)

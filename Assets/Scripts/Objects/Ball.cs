@@ -6,7 +6,7 @@ public class Ball
     [SerializeField] private GameObject player2;
 
     /// <summary>       VER AQUI
-    /// /public int Player { set; get actualPlayer }; //isso nao deve tar bem  escrito xd
+    /// /public int Player { set; get actualPlayer }; //isso nao deve tar bem  escrito xd - mas é pro colider pegar este valor
     /// </summary>
 
     private int actualPlayer = 0;

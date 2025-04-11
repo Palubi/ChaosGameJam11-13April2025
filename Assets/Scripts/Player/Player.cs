@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,8 +13,9 @@ public class Player : MonoBehaviour
     [SerializeField] private int playerOrder;
 
     //Movement
-    private Vector3 inputVector = Vector3.zero;
-    private Vector3 movementVector = Vector3.zero;
+    private Coroutine moveCoroutine = null;
+    private Vector2 inputVector = Vector2.zero;
+    private Vector2 movementVector = Vector2.zero;
 
     [SerializeField] private float speed = 0.00f;
 
@@ -34,20 +36,32 @@ public class Player : MonoBehaviour
     private void MovementPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         inputVector = context.ReadValue<Vector2>();
-        movementVector.x = (inputVector.y * -1);
-        movementVector.y = playerRigidbody.linearVelocity.y;
-        movementVector.z = inputVector.x;
-        Move(movementVector);
+        movementVector.x = inputVector.x;
+        movementVector.y = inputVector.y * (-1);
+        movementVector.Normalize();
+        if (moveCoroutine == null)
+        {
+            moveCoroutine = StartCoroutine(MoveCoroutine());
+        }
     }
 
     private void MovementCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        Move(new Vector3(0.00f, playerRigidbody.linearVelocity.y, 0.00f));
+        movementVector = Vector2.zero;
+        if (moveCoroutine != null)
+        {
+            StopCoroutine(moveCoroutine);
+            moveCoroutine = null;
+        }
     }
 
-    private void Move(Vector3 input)
+    private IEnumerator MoveCoroutine()
     {
-        playerRigidbody.linearVelocity = input * speed;
+        while (true)
+        {
+            playerRigidbody.linearVelocity = new Vector3(movementVector.y, playerRigidbody.linearVelocity.y, movementVector.x) * speed;
+            yield return null;
+        }
     }
 
     private void ShootPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)

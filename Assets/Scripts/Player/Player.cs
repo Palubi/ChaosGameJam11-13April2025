@@ -184,6 +184,7 @@ public class Player : MonoBehaviour, ISlowable
                     if(ballHit.GetComponent<Ball>() == true)
                     {
                         ballHit.GetComponent<Ball>().BallHit(powerPercentage, rotationVector);
+                        print("Power percentage: " + powerPercentage + "| Player rotation: " + rotationVector);
                     }
                 }
             }
@@ -200,6 +201,10 @@ public class Player : MonoBehaviour, ISlowable
         {
             elapsedTime += Time.fixedDeltaTime;
             powerPercentage = (elapsedTime / maxChargeTime) * 100;
+            if(powerPercentage > 100)
+            {
+                powerPercentage = 100;
+            }
             powerBar.GetComponent<PowerBar>().UpdatePower(powerPercentage);
             yield return null;
         }

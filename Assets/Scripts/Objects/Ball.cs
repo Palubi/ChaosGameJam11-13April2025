@@ -9,6 +9,8 @@ public class Ball : MonoBehaviour
     private Vector3 ballVector = Vector3.zero;
     private Rigidbody ballRigidbody = null;
 
+    private Vector3 originalPosition = Vector3.zero;//retirar depois
+
     /// <summary>       VER AQUI
     /// /public int Player { set; get actualPlayer }; //isso nao deve tar bem  escrito xd - mas é pro colider pegar este valor
     /// </summary>
@@ -24,6 +26,7 @@ public class Ball : MonoBehaviour
     private void Awake()
     {
         ballRigidbody = GetComponent<Rigidbody>();
+        originalPosition = transform.position;//retirar depois
     }
 
     private void OnTriggerEnter(Collider other)     //para mandar o tipo de collider
@@ -40,10 +43,13 @@ public class Ball : MonoBehaviour
 
     public void BallHit(float power, Vector2 rotation)
     {
-        ballVector.x = rotation.x;
+        ballVector.x = rotation.y;
         ballVector.y = ballHeight;
-        ballVector.z = rotation.y;
+        ballVector.z = rotation.x;
+        print("Ball rotation: " + rotation);
+        
+        ballVector.Normalize();
 
-        ballRigidbody.AddForce(rotation * power);
+        ballRigidbody.AddForce(ballVector * power);
     }
 }

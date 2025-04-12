@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ISlowable
 {
     //Components
     private Rigidbody playerRigidbody = null;

@@ -97,6 +97,7 @@ public class Player : MonoBehaviour, ISlowable
 
     private void RotationPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+        playerRigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         inputRotationVector = context.ReadValue<Vector2>();
         rotationVector.x = inputRotationVector.x;
         rotationVector.y = inputRotationVector.y * (-1);
@@ -115,6 +116,7 @@ public class Player : MonoBehaviour, ISlowable
             StopCoroutine(rotationCoroutine);
             rotationCoroutine = null;
             gameObject.transform.rotation = Quaternion.Euler(0.00f, rotationInDegrees, 0.00f);
+            playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
 

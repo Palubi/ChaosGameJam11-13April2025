@@ -15,13 +15,15 @@ public class Player : MonoBehaviour
     //Movement
     private bool canMove = true;
     private Coroutine movementCoroutine = null;
-    private Vector2 inputVector = Vector2.zero;
+    private Vector2 inputMovementVector = Vector2.zero;
     private Vector2 movementVector = Vector2.zero;
     [SerializeField] private float speed = 0.00f;
 
     //Rotation
     private bool canRotate = true;
     private Coroutine rotationCoroutine = null;
+    private Vector2 inputRotationVector = Vector2.zero;
+    private Vector2 rotationVector = Vector2.zero;
     private float inputRotation = 0.00f;
     private float rotationInDegrees = 0.00f;
 
@@ -43,6 +45,8 @@ public class Player : MonoBehaviour
         controllsMapping = InputManager.Instance.GetControllsMapping();
         controllsMapping.Player1.Movement.performed += MovementPerformed;
         controllsMapping.Player1.Movement.canceled += MovementCanceled;
+        controllsMapping.Player1.Rotation.performed += RotationPerformed;
+        controllsMapping.Player1.Rotation.canceled += RotationCanceled;
         controllsMapping.Player1.Jump.performed += JumpPerformed;
         controllsMapping.Player1.Shoot.performed += ShootPerformed;
         controllsMapping.Player1.Shoot.canceled += ShootCanceled;
@@ -55,17 +59,13 @@ public class Player : MonoBehaviour
 
     private void MovementPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        inputVector = context.ReadValue<Vector2>();
-        movementVector.x = inputVector.x;
-        movementVector.y = inputVector.y * (-1);
+        inputMovementVector = context.ReadValue<Vector2>();
+        movementVector.x = inputMovementVector.x;
+        movementVector.y = inputMovementVector.y * (-1);
         movementVector.Normalize();
         if (movementCoroutine == null)
         {
             movementCoroutine = StartCoroutine(MovementCoroutine());
-        }
-        if (rotationCoroutine == null)
-        {
-            rotationCoroutine = StartCoroutine(RotationCoroutine());
         }
     }
 
@@ -76,12 +76,6 @@ public class Player : MonoBehaviour
             StopCoroutine(movementCoroutine);
             movementCoroutine = null;
             playerRigidbody.linearVelocity = new Vector3(0.00f, playerRigidbody.linearVelocity.y, 0.00f);
-        }
-        if (rotationCoroutine != null)
-        {
-            StopCoroutine(rotationCoroutine);
-            rotationCoroutine = null;
-            gameObject.transform.rotation = Quaternion.Euler(0.00f, rotationInDegrees, 0.00f);
         }
     }
 
@@ -97,15 +91,38 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void RotationPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+//        inputRotationVector = context.ReadValue<Vector2>();
+  //      rotationVector.x = inputRotationVector.x;
+    //    movementVector.y = inputMovementVector.y * (-1);
+      //  movementVector.Normalize();
+
+        if (rotationCoroutine == null)
+        {
+            rotationCoroutine = StartCoroutine(RotationCoroutine());
+        }
+    }
+
+    private void RotationCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        if (rotationCoroutine != null)
+        {
+            StopCoroutine(rotationCoroutine);
+            rotationCoroutine = null;
+            gameObject.transform.rotation = Quaternion.Euler(0.00f, rotationInDegrees, 0.00f);
+        }
+    }
+
     private IEnumerator RotationCoroutine()
     {
         while(true)
         {
             if (canRotate)
             {
-                inputRotation = Mathf.Atan2(movementVector.y, movementVector.x);
-                rotationInDegrees = inputRotation * Mathf.Rad2Deg;
-                gameObject.transform.rotation = Quaternion.Euler(0.00f, rotationInDegrees, 0.00f);
+//                inputRotationVector = Mathf.Atan2(movementVector.y, movementVector.x);
+  //              rotationInDegrees = inputRotation * Mathf.Rad2Deg;
+    //            gameObject.transform.rotation = Quaternion.Euler(0.00f, rotationInDegrees, 0.00f);
                 yield return null;
             }
         }

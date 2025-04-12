@@ -35,9 +35,13 @@ public class Player : MonoBehaviour, ISlowable
     [SerializeField] private Vector3 groundCheckSize;
     [SerializeField] private LayerMask groundLayerMask;
 
+    //Ground layer mask
+    int groundLayer = 0;
+
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
+        groundLayer = LayerMask.NameToLayer("Ground");
     }
 
     private void Start()
@@ -93,10 +97,10 @@ public class Player : MonoBehaviour, ISlowable
 
     private void RotationPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-//        inputRotationVector = context.ReadValue<Vector2>();
-  //      rotationVector.x = inputRotationVector.x;
-    //    movementVector.y = inputMovementVector.y * (-1);
-      //  movementVector.Normalize();
+        inputRotationVector = context.ReadValue<Vector2>();
+        rotationVector.x = inputRotationVector.x;
+        rotationVector.y = inputRotationVector.y * (-1);
+        rotationVector.Normalize();
 
         if (rotationCoroutine == null)
         {
@@ -120,9 +124,9 @@ public class Player : MonoBehaviour, ISlowable
         {
             if (canRotate)
             {
-//                inputRotationVector = Mathf.Atan2(movementVector.y, movementVector.x);
-  //              rotationInDegrees = inputRotation * Mathf.Rad2Deg;
-    //            gameObject.transform.rotation = Quaternion.Euler(0.00f, rotationInDegrees, 0.00f);
+                inputRotation = Mathf.Atan2(rotationVector.y, rotationVector.x);
+                rotationInDegrees = inputRotation * Mathf.Rad2Deg;
+                gameObject.transform.rotation = Quaternion.Euler(0.00f, rotationInDegrees, 0.00f);
                 yield return null;
             }
         }
@@ -130,8 +134,6 @@ public class Player : MonoBehaviour, ISlowable
 
     private void JumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        //Este groundCheck não está a funcionar
-        //isGrounded = Physics.OverlapBox(groundCheck.transform.position, groundCheckSize, Quaternion.identity, groundLayerMask) != null && playerRigidbody.linearVelocity.y <= 0.01f;
         if (isGrounded)
         {
             Jump();
@@ -150,5 +152,22 @@ public class Player : MonoBehaviour, ISlowable
 
     private void ShootCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == groundLayer)
+        {
+            isGrounded = true;
+        }
+
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.layer == groundLayer)
+        {
+            isGrounded = false;
+        }
     }
 }

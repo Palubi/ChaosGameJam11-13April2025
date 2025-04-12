@@ -38,6 +38,19 @@ public class Player : MonoBehaviour, ISlowable
     //Ground layer mask
     int groundLayer = 0;
 
+    //Power bar
+    [SerializeField] private GameObject powerBarCanvas = null;
+    [SerializeField] private GameObject powerBar = null;
+    private Coroutine powerBarCoroutine = null;
+    [SerializeField] private float maxChargeTime = 0.00f;
+    private float powerPercentage = 0.00f;
+
+    //Player shooting
+    [SerializeField] private Vector3 maxHalfExtents = Vector3.zero;
+    [SerializeField] private LayerMask ballLayerMask;
+    private Collider[] ballsDetected;
+    private bool hitTheBall = false;
+
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
@@ -150,10 +163,47 @@ public class Player : MonoBehaviour, ISlowable
 
     private void ShootPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+        if (powerBarCoroutine == null)
+        {
+            powerBarCanvas.SetActive(true);
+            powerBarCoroutine = StartCoroutine(PowerBarCoroutine());
+        }
     }
 
     private void ShootCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+        if (powerBarCoroutine != null)
+        {
+            StopCoroutine(powerBarCoroutine);
+            powerBarCoroutine = null;
+            ballsDetected = Physics.OverlapBox(transform.position, maxHalfExtents, Quaternion.identity, ballLayerMask);
+            if(ballsDetected.Length != 0)
+            {
+                foreach(var ballHit in ballsDetected)
+                {
+                    if(ballHit.GetComponent<Ball>() == true)
+                    {
+                        ballHit.GetComponent<Ball>().BallHit(powerPercentage, rotationVector);
+                    }
+                }
+            }
+            powerBarCanvas.SetActive(false);
+        }
+    }
+
+    private IEnumerator PowerBarCoroutine()
+    {
+        powerPercentage = 0.00f;
+        float elapsedTime = 0.00f;
+
+        while (true)
+        {
+            elapsedTime += Time.fixedDeltaTime;
+            powerPercentage = (elapsedTime / maxChargeTime) * 100;
+            powerBar.GetComponent<PowerBar>().UpdatePower(powerPercentage);
+            yield return null;
+        }
+
     }
 
     private void OnCollisionEnter(Collision collision)

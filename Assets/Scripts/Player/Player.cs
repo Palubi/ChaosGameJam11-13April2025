@@ -49,7 +49,6 @@ public class Player : MonoBehaviour, ISlowable
     [SerializeField] private Vector3 maxHalfExtents = Vector3.zero;
     [SerializeField] private LayerMask ballLayerMask;
     private Collider[] ballsDetected;
-    private bool hitTheBall = false;
 
     private void Awake()
     {
@@ -183,8 +182,8 @@ public class Player : MonoBehaviour, ISlowable
                 {
                     if(ballHit.GetComponent<Ball>() == true)
                     {
-                        ballHit.GetComponent<Ball>().BallHit(powerPercentage, rotationVector);
                         print("Power percentage: " + powerPercentage + "| Player rotation: " + rotationVector);
+                        ballHit.GetComponent<Ball>().BallHit(powerPercentage, rotationVector);
                     }
                 }
             }
@@ -200,10 +199,10 @@ public class Player : MonoBehaviour, ISlowable
         while (true)
         {
             elapsedTime += Time.fixedDeltaTime;
-            powerPercentage = (elapsedTime / maxChargeTime) * 100;
-            if(powerPercentage > 100)
+            powerPercentage = (elapsedTime / maxChargeTime);
+            if(powerPercentage >= 1)
             {
-                powerPercentage = 100;
+                powerPercentage = 1;
             }
             powerBar.GetComponent<PowerBar>().UpdatePower(powerPercentage);
             yield return null;

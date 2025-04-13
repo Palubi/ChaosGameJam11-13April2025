@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class Ranhoca : MonoBehaviour, ISlowable
+public class Ranhoca : MonoBehaviour
 {
     [SerializeField] private float slowValue; //percentage
     private Collider myCollider;
+
 
     private void Awake()
     {

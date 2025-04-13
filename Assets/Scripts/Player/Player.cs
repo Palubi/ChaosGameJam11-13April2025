@@ -72,7 +72,7 @@ public class Player : MonoBehaviour, ISlowable
 
     private void FixedUpdate()
     {
-        playerRigidbody.AddForce(Physics.gravity * gravityScale, ForceMode.Acceleration);//Por causa de não haver "gravity scale" em 3D.
+        playerRigidbody.AddForce(Physics.gravity * gravityScale, ForceMode.Acceleration);//Por causa de nï¿½o haver "gravity scale" em 3D.
     }
 
     private void MovementPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -226,7 +226,7 @@ public class Player : MonoBehaviour, ISlowable
 
     }
 
-/*    private void OnCollisionEnter(Collision collision) // tirei porque não estava a funcionar consistentemente
+/*    private void OnCollisionEnter(Collision collision) // tirei porque nï¿½o estava a funcionar consistentemente
     {
         if (collision.gameObject.layer == groundLayer)
         {

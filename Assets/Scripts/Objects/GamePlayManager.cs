@@ -15,8 +15,7 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] private Collider leftOutCollider;
     [SerializeField] private Collider rightOutCollider;
 
-    [SerializeField] private List<GameObject> leftGround;
-    [SerializeField] private List<GameObject> rightGround;
+  
 
     private int[] players = new int[2] { 1, 2 };
     private int actualPlayer = 0;
@@ -27,15 +26,15 @@ public class GamePlayManager : MonoBehaviour
     private int effectzSie;
 
 
-    private void Debuff(List<GameObject> objectList)    //Touching grouund chama este metodo
+    private void Debuff(List<GameObject> objectList, int chosenPlayer)    //Touching grouund chama este metodo
     {
         int index = Random.Range(0, effectzSie);
 
         objectList[index].TryGetComponent<IActivable>(out IActivable effect);
-        effect.Ativate();
+        effect.Ativate(chosenPlayer);
         objectList.RemoveAt(index);
     }
-
+    
     public void TouchingGround( int player, Collider touchedCollider)
     {
 

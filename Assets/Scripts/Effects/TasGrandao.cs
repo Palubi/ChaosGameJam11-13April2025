@@ -1,20 +1,23 @@
 using UnityEngine;
 
-public class TasGrandao : MonoBehaviour
+public class TasGrandao : MonoBehaviour, IActivable
 {
-   
+    [SerializeField] private GameObject player1;
+    [SerializeField] private GameObject player2;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
+    public void Ativate(int player)
+    {/*
+        if (player == 1)
+        {
+            Spawn(player1);
+        }
+        else
+        {
+            Spawn(player2);
+        }*/
     }
-
-    
-
-    // Update is called once per frame
-    void Update()
+    private void Spawn( GameObject player)
     {
-        
+       //efeito
     }
 }

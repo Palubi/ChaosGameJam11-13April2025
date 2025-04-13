@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class GamePlayManager : MonoBehaviour
@@ -15,9 +16,10 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] private Collider leftOutCollider;
     [SerializeField] private Collider rightOutCollider;
 
-  
 
-    private int[] players = new int[2] { 1, 2 };
+
+    [SerializeField] private GameObject[] players;
+    private int[] playersArray = new int[2] { 1, 2 };
     private int actualPlayer = 0;
 
     [SerializeField] private List<GameObject> effectsPlayer1;
@@ -25,17 +27,21 @@ public class GamePlayManager : MonoBehaviour
 
     private int effectzSie;
 
-    [SerializeField] private GameObject Ball;
+    [SerializeField] private GameObject ball;
 
     private void Aleatorio()
     {
-        int number = Random.Range(0, 2);
+        int number = Random.Range(0, players.Length);
         SpawnBall1(number);
           
     }
 
     private void SpawnBall1(int player)
     {
+        GameObject newBall = Instantiate(ball, players[player].transform.position, Quaternion.identity);
+        Rigidbody newBallRigibody =
+            newBall.GetComponent<Rigidbody>();
+        newBallRigibody.useGravity = false;
 
     }
 
@@ -101,7 +107,7 @@ public class GamePlayManager : MonoBehaviour
             touchedCollider = rightOutCollider;
         }
 
-        if (actualPlayer != players[player]) // signific que ja tocou uma vez no chao
+        if (actualPlayer != playersArray[player]) // signific que ja tocou uma vez no chao
         {
             //other ganha um ponto
         }

@@ -49,6 +49,10 @@ public class Ball : MonoBehaviour
 
     public void BallHit(float power, Vector2 rotation)//Este método deveria estar no player, mas isso não foi alterado para poupar tempo
     {
+        if (ballRigidbody.useGravity == false)
+        {
+            ballRigidbody.useGravity = true;
+        }
         print("Entered BallHit. Ball vector: " + rotation);
         ballVector.x = rotation.y;
         ballVector.y = ballHeight;

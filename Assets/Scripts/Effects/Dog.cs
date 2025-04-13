@@ -4,9 +4,6 @@ public class Dog : MonoBehaviour, IActivable
 {
     [SerializeField] private GameObject dogleft;
     [SerializeField] private GameObject dogright;
-
-   
-
     
 
     public void Ativate(int player)

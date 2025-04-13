@@ -1489,7 +1489,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 840
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1518,6 +1518,7 @@ MonoBehaviour:
   speed: 8
   playerPosition: {x: 0, y: 0, z: 0}
   mousePosition: {x: 0, y: 0, z: 0}
+  playerToMousePosition: {x: 0, y: 0, z: 0}
   playerToMouseVector: {x: 0, y: 0, z: 0}
   gravityScale: 7
   jumpForce: 900
@@ -1532,7 +1533,7 @@ MonoBehaviour:
   maxHalfExtents: {x: 2, y: 4, z: 2}
   ballLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
 --- !u!1001 &664363289
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4525,7 +4526,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 840
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

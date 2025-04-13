@@ -26,10 +26,11 @@ public class Player2 : MonoBehaviour, ISlowable
     //Rotation
     [SerializeField] private Vector3 playerPosition;
     [SerializeField] private Vector3 mousePosition = Vector3.zero;
-    [SerializeField] private Vector3 playerToMousePosition = Vector3.zero;
+    [SerializeField] private Vector2 playerToMousePosition = Vector2.zero;
     [SerializeField] private Vector3 playerToMouseVector = Vector3.zero;
     private float inputRotation = 0.00f;
     private float rotationInDegrees = 0.00f;
+    private Camera mainCamera = null;
 
     //Jump
     [SerializeField] private float gravityScale = 0.00f;//Custom gravity scale
@@ -56,6 +57,7 @@ public class Player2 : MonoBehaviour, ISlowable
 
     private void Awake()
     {
+        mainCamera = Camera.main;
         playerRigidbody = GetComponent<Rigidbody>();
         groundLayer = LayerMask.NameToLayer("Ground");
         playerAnimator = GetComponent<Animator>();
@@ -81,14 +83,25 @@ public class Player2 : MonoBehaviour, ISlowable
 
     private void Update()
     {
-        mousePosition = Input.mousePosition;
-        playerPosition = transform.position;
-        playerToMousePosition = Camera.main.ScreenToWorldPoint(mousePosition - playerPosition);
-        playerToMouseVector = new Vector3(playerToMousePosition.x - playerPosition.z, playerToMousePosition.y - playerPosition.x, 0.00f);
-        playerToMouseVector.Normalize();
-        inputRotation = Mathf.Atan2(playerToMouseVector.y, playerToMouseVector.x);
-        rotationInDegrees = inputRotation * Mathf.Deg2Rad;
-        gameObject.transform.rotation = Quaternion.Euler(0.00f, rotationInDegrees, 0.00f);
+        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+
+        Ray ray = mainCamera.ScreenPointToRay(mouseScreenPos);
+
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+
+        if (groundPlane.Raycast(ray, out float hitDistance))
+        {
+            Vector3 hitPoint = ray.GetPoint(hitDistance);
+
+            mousePosition = hitPoint - transform.position;
+            mousePosition.y = 0f;
+
+            if (mousePosition.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(mousePosition);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+            }
+        }
     }
 
     private void MovementPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -175,8 +188,10 @@ public class Player2 : MonoBehaviour, ISlowable
                 {
                     if (ballHit.GetComponent<Ball>() == true)
                     {
-                        playerAnimator.SetTrigger("Shoot");
-                        ballHit.GetComponent<Ball>().BallHit(powerPercentage, playerToMouseVector);
+                        print("PlayerToMouseVector: " + mousePosition);
+                        playerToMousePosition.x = mousePosition.z;
+                        playerToMousePosition.y = mousePosition.x;
+                        ballHit.GetComponent<Ball>().BallHit(powerPercentage, playerToMousePosition);
                     }
                 }
             }

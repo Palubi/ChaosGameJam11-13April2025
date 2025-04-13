@@ -1,7 +1,9 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
+using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour//, ISlowable
+public class Player2 : MonoBehaviour, ISlowable
 {
     //Components
     private Rigidbody playerRigidbody = null;
@@ -22,10 +24,10 @@ public class Player : MonoBehaviour//, ISlowable
     private float initialSpeed = 0.00f;
 
     //Rotation
-    private bool canRotate = true;
-    private Coroutine rotationCoroutine = null;
-    private Vector2 inputRotationVector = Vector2.zero;
-    private Vector2 rotationVector = Vector2.zero;
+    [SerializeField] private Vector3 playerPosition;
+    [SerializeField] private Vector3 mousePosition = Vector3.zero;
+    [SerializeField] private Vector3 playerToMousePosition = Vector3.zero;
+    [SerializeField] private Vector3 playerToMouseVector = Vector3.zero;
     private float inputRotation = 0.00f;
     private float rotationInDegrees = 0.00f;
 
@@ -63,18 +65,30 @@ public class Player : MonoBehaviour//, ISlowable
     private void Start()
     {
         controllsMapping = InputManager.Instance.GetControllsMapping();
-        controllsMapping.Player1.Movement.performed += MovementPerformed;
-        controllsMapping.Player1.Movement.canceled += MovementCanceled;
-        controllsMapping.Player1.Rotation.performed += RotationPerformed;
-        controllsMapping.Player1.Rotation.canceled += RotationCanceled;
-        controllsMapping.Player1.Jump.performed += JumpPerformed;
-        controllsMapping.Player1.Shoot.performed += ShootPerformed;
-        controllsMapping.Player1.Shoot.canceled += ShootCanceled;
+        controllsMapping.Player2.Movement.performed += MovementPerformed;
+        controllsMapping.Player2.Movement.canceled += MovementCanceled;
+        controllsMapping.Player2.Jump.performed += JumpPerformed;
+        controllsMapping.Player2.Shoot.performed += ShootPerformed;
+        controllsMapping.Player2.Shoot.canceled += ShootCanceled;
     }
 
     private void FixedUpdate()
     {
         playerRigidbody.AddForce(Physics.gravity * gravityScale, ForceMode.Acceleration);//Por causa de n�o haver "gravity scale" em 3D.
+    }
+
+
+
+    private void Update()
+    {
+        mousePosition = Input.mousePosition;
+        playerPosition = transform.position;
+        playerToMousePosition = Camera.main.ScreenToWorldPoint(mousePosition - playerPosition);
+        playerToMouseVector = new Vector3(playerToMousePosition.x - playerPosition.z, playerToMousePosition.y - playerPosition.x, 0.00f);
+        playerToMouseVector.Normalize();
+        inputRotation = Mathf.Atan2(playerToMouseVector.y, playerToMouseVector.x);
+        rotationInDegrees = inputRotation * Mathf.Deg2Rad;
+        gameObject.transform.rotation = Quaternion.Euler(0.00f, rotationInDegrees, 0.00f);
     }
 
     private void MovementPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -107,46 +121,7 @@ public class Player : MonoBehaviour//, ISlowable
         {
             if (canMove)
             {
-                playerRigidbody.linearVelocity = new Vector3(movementVector.y, playerRigidbody.linearVelocity.y/speed, movementVector.x) * speed;
-                yield return null;
-            }
-        }
-    }
-
-    private void RotationPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        playerRigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-        inputRotationVector = context.ReadValue<Vector2>();
-        rotationVector.x = inputRotationVector.x;
-        rotationVector.y = inputRotationVector.y * (-1);
-        rotationVector.Normalize();
-
-        if (rotationCoroutine == null)
-        {
-            rotationCoroutine = StartCoroutine(RotationCoroutine());
-        }
-    }
-
-    private void RotationCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        if (rotationCoroutine != null)
-        {
-            StopCoroutine(rotationCoroutine);
-            rotationCoroutine = null;
-            gameObject.transform.rotation = Quaternion.Euler(0.00f, rotationInDegrees, 0.00f);
-            playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-        }
-    }
-
-    private IEnumerator RotationCoroutine()
-    {
-        while(true)
-        {
-            if (canRotate)
-            {
-                inputRotation = Mathf.Atan2(rotationVector.y, rotationVector.x);
-                rotationInDegrees = inputRotation * Mathf.Rad2Deg;
-                gameObject.transform.rotation = Quaternion.Euler(0.00f, rotationInDegrees, 0.00f);
+                playerRigidbody.linearVelocity = new Vector3(movementVector.y, playerRigidbody.linearVelocity.y / speed, movementVector.x) * speed;
                 yield return null;
             }
         }
@@ -162,7 +137,7 @@ public class Player : MonoBehaviour//, ISlowable
 
     private bool GetIsGrounded()
     {
-        if(transform.position.y <= .15)
+        if (transform.position.y <= .15)
         {
             return true;
         }
@@ -194,14 +169,14 @@ public class Player : MonoBehaviour//, ISlowable
             StopCoroutine(powerBarCoroutine);
             powerBarCoroutine = null;
             ballsDetected = Physics.OverlapBox(transform.position, maxHalfExtents, Quaternion.identity, ballLayerMask);
-            if(ballsDetected.Length != 0)
+            if (ballsDetected.Length != 0)
             {
-                foreach(var ballHit in ballsDetected)
+                foreach (var ballHit in ballsDetected)
                 {
-                    if(ballHit.GetComponent<Ball>() == true)
+                    if (ballHit.GetComponent<Ball>() == true)
                     {
                         playerAnimator.SetTrigger("Shoot");
-                        ballHit.GetComponent<Ball>().BallHit(powerPercentage, rotationVector);
+                        ballHit.GetComponent<Ball>().BallHit(powerPercentage, playerToMouseVector);
                     }
                 }
             }
@@ -218,7 +193,7 @@ public class Player : MonoBehaviour//, ISlowable
         {
             elapsedTime += Time.fixedDeltaTime;
             powerPercentage = (elapsedTime / maxChargeTime);
-            if(powerPercentage >= 1)
+            if (powerPercentage >= 1)
             {
                 powerPercentage = 1;
             }

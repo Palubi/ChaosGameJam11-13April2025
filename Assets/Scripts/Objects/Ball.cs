@@ -12,6 +12,10 @@ public class Ball : MonoBehaviour
     private Vector3 ballVector = Vector3.zero;
     private Rigidbody ballRigidbody = null;
 
+    //Bounce variables
+    int netLayer = 0;
+    int LimitsLayer = 0;
+
     /// <summary>       VER AQUI
     /// /public int Player { set; get actualPlayer }; //isso nao deve tar bem  escrito xd - mas é pro colider pegar este valor
     /// </summary>
@@ -27,6 +31,8 @@ public class Ball : MonoBehaviour
     private void Awake()
     {
         ballRigidbody = GetComponent<Rigidbody>();
+        netLayer = LayerMask.NameToLayer("Net");
+        LimitsLayer = LayerMask.NameToLayer("Limits");
     }
 
     private void OnTriggerEnter(Collider other)     //para mandar o tipo de collider
@@ -52,5 +58,23 @@ public class Ball : MonoBehaviour
         print("StrenghtToApply: " + strengthToApply);
         ballRigidbody.linearVelocity = Vector3.zero;
         ballRigidbody.AddForce(ballVector * strengthToApply, ForceMode.Impulse);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == netLayer || collision.gameObject.layer == LimitsLayer)
+        {
+            ballRigidbody.linearVelocity = new Vector3(ballRigidbody.linearVelocity.x, 0.2f, ballRigidbody.linearVelocity.z);
+        }
+        else
+        {
+            Bounce();//Porque o bounce deixou de funcionar
+        }
+    }
+
+    private void Bounce()
+    {
+        ballRigidbody.linearVelocity = new Vector3(ballRigidbody.linearVelocity.x, 0.00f, ballRigidbody.linearVelocity.z);
+        ballRigidbody.AddForce((Vector3.up * 3.5f), ForceMode.Impulse);
     }
 }

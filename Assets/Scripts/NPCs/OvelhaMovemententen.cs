@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
@@ -25,6 +26,7 @@ public class OvelhaMovement : MonoBehaviour, ISlowable
     private void Start()
     {
         speed = navMesh.speed;
+        Invoke(nameof(StartWalk), 3f);
     }
 
     private void ChooseTarget()
@@ -37,9 +39,17 @@ public class OvelhaMovement : MonoBehaviour, ISlowable
         navMesh.SetDestination(target);
     }
 
-    private void FixedUpdate()
+    private void StartWalk()
     {
-        ChooseTarget();
+        StartCoroutine(Walk());
+    }
+    private IEnumerator Walk()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.5f);
+            ChooseTarget();
+        }
     }
 
     public void NotSlow()

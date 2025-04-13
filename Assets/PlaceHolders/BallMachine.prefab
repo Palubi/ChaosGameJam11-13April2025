@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3558485635530628781}
   - component: {fileID: 5334255231155134509}
+  - component: {fileID: -1415802470279000795}
   m_Layer: 0
   m_Name: BallMachine
   m_TagString: Untagged
@@ -87,3 +88,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-1415802470279000795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4386593414768211748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3158d1ff8918cfa4ea524c7cae6c6fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballStrenght: 7
+  ballPrefab: {fileID: 4900813534095493498, guid: 4db7917790be15a4ab3673665ceb1900, type: 3}

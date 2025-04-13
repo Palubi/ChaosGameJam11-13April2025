@@ -5,6 +5,7 @@ public class Player : MonoBehaviour, ISlowable
 {
     //Components
     private Rigidbody playerRigidbody = null;
+    private Animator playerAnimator = null;
 
     //ControllsMapping
     private ControllsMapping controllsMapping = null;
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour, ISlowable
     {
         playerRigidbody = GetComponent<Rigidbody>();
         groundLayer = LayerMask.NameToLayer("Ground");
+        playerAnimator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -81,6 +83,7 @@ public class Player : MonoBehaviour, ISlowable
         movementVector.Normalize();
         if (movementCoroutine == null)
         {
+            playerAnimator.SetTrigger("Run");
             movementCoroutine = StartCoroutine(MovementCoroutine());
         }
     }
@@ -89,6 +92,7 @@ public class Player : MonoBehaviour, ISlowable
     {
         if (movementCoroutine != null)
         {
+            playerAnimator.SetTrigger("Idle");
             StopCoroutine(movementCoroutine);
             movementCoroutine = null;
             playerRigidbody.linearVelocity = new Vector3(0.00f, playerRigidbody.linearVelocity.y, 0.00f);
@@ -148,9 +152,21 @@ public class Player : MonoBehaviour, ISlowable
 
     private void JumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        if (isGrounded)
+        if (GetIsGrounded() == true)
         {
             Jump();
+        }
+    }
+
+    private bool GetIsGrounded()
+    {
+        if(transform.position.y <= .15)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -182,7 +198,7 @@ public class Player : MonoBehaviour, ISlowable
                 {
                     if(ballHit.GetComponent<Ball>() == true)
                     {
-                        print("Power percentage: " + powerPercentage + "| Player rotation: " + rotationVector);
+                        playerAnimator.SetTrigger("Shoot");
                         ballHit.GetComponent<Ball>().BallHit(powerPercentage, rotationVector);
                     }
                 }
@@ -210,7 +226,7 @@ public class Player : MonoBehaviour, ISlowable
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+/*    private void OnCollisionEnter(Collision collision) // tirei porque não estava a funcionar consistentemente
     {
         if (collision.gameObject.layer == groundLayer)
         {
@@ -225,5 +241,5 @@ public class Player : MonoBehaviour, ISlowable
         {
             isGrounded = false;
         }
-    }
+    }*/
 }

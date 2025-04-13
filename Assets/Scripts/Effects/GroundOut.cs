@@ -46,7 +46,7 @@ public class GroundOut : MonoBehaviour, IActivable
             int j = Random.Range(0, ground.Count + 1);
             movedGround.Add(ground[j]);
             ground.RemoveAt(j);
-            ground[i].GetComponent<Rigidbody>().useGravity = true;
+            ground[i].GetComponent<Rigidbody>().useGravity = true;  //Desativar os constrains
         }
 
 

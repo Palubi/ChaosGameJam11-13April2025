@@ -2,14 +2,10 @@ using UnityEngine;
 
 public class ExtraBall : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // seguir a bola original
+    //outra cor
+    //spawnar   + dps - fazer corrotina - max x bolas- umas 15????
     void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
     {
         
     }

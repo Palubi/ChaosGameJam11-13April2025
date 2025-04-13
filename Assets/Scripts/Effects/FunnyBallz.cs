@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class FunnyBallz : MonoBehaviour, IActivable
 {
@@ -6,18 +7,13 @@ public class FunnyBallz : MonoBehaviour, IActivable
 
     public void Ativate(int player)
     {
-        throw new System.NotImplementedException();
+        Spawn();
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Spawn()
     {
-        
+        extraBall.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+ 
 }

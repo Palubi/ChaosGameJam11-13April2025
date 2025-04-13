@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class GamePlayManager : MonoBehaviour
@@ -13,16 +15,32 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] private Collider leftOutCollider;
     [SerializeField] private Collider rightOutCollider;
 
+    [SerializeField] private List<GameObject> leftGround;
+    [SerializeField] private List<GameObject> rightGround;
+
     private int[] players = new int[2] { 1, 2 };
     private int actualPlayer = 0;
-  
+
+    [SerializeField] private List<GameObject> effectsPlayer1;
+    [SerializeField] private List<GameObject> effectsPlayer2;
+
+    private int effectzSie;
+
+
+    private void Debuff(List<GameObject> objectList)    //Touching grouund chama este metodo
+    {
+        int index = Random.Range(0, effectzSie);
+
+        objectList[index].TryGetComponent<IActivable>(out IActivable effect);
+        effect.Ativate();
+        objectList.RemoveAt(index);
+    }
 
     public void TouchingGround( int player, Collider touchedCollider)
     {
 
         if (touchedCollider == leftInCollider)
         {
-            
 
             if (player == 1)
             {
@@ -36,6 +54,7 @@ public class GamePlayManager : MonoBehaviour
                 }
                 
             }
+            touchedCollider = leftInCollider;
         }
         else if (touchedCollider == rightInCollider)
         {
@@ -50,6 +69,7 @@ public class GamePlayManager : MonoBehaviour
                     // ponto pro 1
                 }
             }
+            touchedCollider = rightInCollider;
         }
         else if (touchedCollider == leftOutCollider)       // quando lançam pra fora ver se troca o nome do colider
         {
@@ -61,10 +81,11 @@ public class GamePlayManager : MonoBehaviour
             {
                 //  ponto pro player 1
             }
+            touchedCollider = leftOutCollider;
         }
         else
         {
-
+            touchedCollider = rightOutCollider;
         }
 
         if (actualPlayer != players[player]) // signific que ja tocou uma vez no chao

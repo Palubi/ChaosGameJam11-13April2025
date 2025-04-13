@@ -2,16 +2,8 @@ using UnityEngine;
 
 public class Cabelazzz : MonoBehaviour
 {
-    private
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Spawn(GameObject player)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+       // spawnar nas cordeanadas da cabeça do player
     }
 }

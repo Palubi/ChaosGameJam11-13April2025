@@ -47,8 +47,9 @@ public class Ball : MonoBehaviour
         //if()
     }
 
-    public void BallHit(float power, Vector2 rotation)//Este método deveria estar no player, mas isso não foi alterado para poupar tempo
+    public void BallHit(float power, Vector2 rotation, int player)//Este método deveria estar no player, mas isso não foi alterado para poupar tempo
     {
+        actualPlayer = player;
         if (ballRigidbody.useGravity == false)
         {
             ballRigidbody.useGravity = true;

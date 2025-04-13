@@ -191,7 +191,7 @@ public class Player2 : MonoBehaviour, ISlowable
                         print("PlayerToMouseVector: " + mousePosition);
                         playerToMousePosition.x = mousePosition.z;
                         playerToMousePosition.y = mousePosition.x;
-                        ballHit.GetComponent<Ball>().BallHit(powerPercentage, playerToMousePosition);
+                        ballHit.GetComponent<Ball>().BallHit(powerPercentage, playerToMousePosition, playerNumber);
                     }
                 }
             }

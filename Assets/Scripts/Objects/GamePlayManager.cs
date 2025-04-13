@@ -25,6 +25,20 @@ public class GamePlayManager : MonoBehaviour
 
     private int effectzSie;
 
+    [SerializeField] private GameObject Ball;
+
+    private void Aleatorio()
+    {
+        int number = Random.Range(0, 2);
+        SpawnBall1(number);
+          
+    }
+
+    private void SpawnBall1(int player)
+    {
+
+    }
+
 
     private void Debuff(List<GameObject> objectList, int chosenPlayer)    //Touching grouund chama este metodo
     {

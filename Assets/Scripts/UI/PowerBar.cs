@@ -22,6 +22,6 @@ public class PowerBar : MonoBehaviour
 
     public void UpdatePower(float percentage)
     {
-        powerBarImage.fillAmount = percentage / 100;
+        powerBarImage.fillAmount = percentage;
     }
 }

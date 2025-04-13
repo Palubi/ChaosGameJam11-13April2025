@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 90673078956040412}
   - component: {fileID: 8953611525963867832}
   - component: {fileID: 985295391577600729}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PlayerPlaceholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ MonoBehaviour:
     m_Bits: 64
   powerBarCanvas: {fileID: 1368393459131376815}
   powerBar: {fileID: 5198006404756882979}
-  maxChargeTime: 2
+  maxChargeTime: 1
   maxHalfExtents: {x: 2, y: 2, z: 2}
   ballLayerMask:
     serializedVersion: 2
@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 4329378696707267277}
   - component: {fileID: 2143196395713100357}
   - component: {fileID: 6788854417838331174}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3726117434222476698}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7895612674967451572}
   - component: {fileID: 2009528878117790991}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Racket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -404,7 +404,7 @@ GameObject:
   - component: {fileID: 8056534380430446801}
   - component: {fileID: 2229053585815799708}
   - component: {fileID: 330164635285219409}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: StrenghtBarPower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -492,7 +492,7 @@ GameObject:
   - component: {fileID: 4350372153038912886}
   - component: {fileID: 6827843769500495604}
   - component: {fileID: 6876259437652684304}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -602,7 +602,7 @@ GameObject:
   - component: {fileID: 5675436490739088230}
   - component: {fileID: 1906499159894313244}
   - component: {fileID: 4759370646616179180}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: StrenghtBarFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}

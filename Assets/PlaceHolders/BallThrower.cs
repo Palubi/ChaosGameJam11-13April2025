@@ -22,7 +22,7 @@ public class BallThrower : MonoBehaviour
     private IEnumerator ThrowBall()
     {
         int ballsThrown = 0;
-        while (ballsThrown <= 1)
+        while (ballsThrown <= 50)
         {
             ballsThrown++;
             GameObject newBall = Instantiate(ballPrefab,gameObject.transform);

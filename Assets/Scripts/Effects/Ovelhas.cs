@@ -5,10 +5,22 @@ public class Ovelhas : MonoBehaviour, IActivable
     [SerializeField] private GameObject ovelhasMainLeft;
     [SerializeField] private GameObject ovelhasMainRight;
 
-    private void Awake()
+   // [SerializeField] private 
+
+    private void Walk()
     {
-      //set active false - mas deixamos predefinido false 
+
+
+
+
+
     }
+
+    private void FixedUpdate()
+    {
+        Walk();
+    }
+
     public void Ativate(int player)
     {
         if (player == 1)

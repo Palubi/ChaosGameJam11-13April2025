@@ -60,6 +60,7 @@ public class Player : MonoBehaviour//, ISlowable
         initialSpeed = speed;
     }
 
+
     private void Start()
     {
         controllsMapping = InputManager.Instance.GetControllsMapping();
@@ -201,7 +202,7 @@ public class Player : MonoBehaviour//, ISlowable
                     if(ballHit.GetComponent<Ball>() == true)
                     {
                         playerAnimator.SetTrigger("Shoot");
-                        ballHit.GetComponent<Ball>().BallHit(powerPercentage, rotationVector);
+                        ballHit.GetComponent<Ball>().BallHit(powerPercentage, rotationVector, playerNumber);
                     }
                 }
             }

@@ -10,14 +10,19 @@ public class BallThrower : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(ThrowBall());
+        StartCoroutine(InitialDelay());
         waitTime = new WaitForSeconds(3.5f);
+    }
+    private IEnumerator InitialDelay()
+    {
+        yield return new WaitForSeconds(5);
+        StartCoroutine(ThrowBall());
     }
 
     private IEnumerator ThrowBall()
     {
         int ballsThrown = 0;
-        while (ballsThrown <= 50)
+        while (ballsThrown <= 1)
         {
             ballsThrown++;
             GameObject newBall = Instantiate(ballPrefab,gameObject.transform);

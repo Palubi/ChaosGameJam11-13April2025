@@ -1272,7 +1272,7 @@ PrefabInstance:
       addedObject: {fileID: 651221724}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 729221cb3db47d143b94b9fdcd27993a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 651221723}
+      addedObject: {fileID: 651221727}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 729221cb3db47d143b94b9fdcd27993a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 651221722}
@@ -1447,34 +1447,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &651221723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 651221720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6dc29608b368bc47a47f21686ee693e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerNumber: 2
-  speed: 8
-  gravityScale: 7
-  jumpForce: 900
-  groundCheck: {fileID: 0}
-  groundCheckSize: {x: 0, y: 0, z: 0}
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 320
-  powerBarCanvas: {fileID: 59432320}
-  powerBar: {fileID: 1878187309}
-  maxChargeTime: 1
-  maxHalfExtents: {x: 2, y: 4, z: 2}
-  ballLayerMask:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!54 &651221724
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1500,7 +1472,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!4 &651221725 stripped
 Transform:
@@ -1530,6 +1502,37 @@ CapsuleCollider:
   m_Height: 0.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &651221727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651221720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048774cb9e08f374e98418167cc690bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNumber: 2
+  speed: 8
+  playerPosition: {x: 0, y: 0, z: 0}
+  mousePosition: {x: 0, y: 0, z: 0}
+  playerToMouseVector: {x: 0, y: 0, z: 0}
+  gravityScale: 7
+  jumpForce: 900
+  groundCheck: {fileID: 0}
+  groundCheckSize: {x: 0, y: 0, z: 0}
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 320
+  powerBarCanvas: {fileID: 59432320}
+  powerBar: {fileID: 1878187309}
+  maxChargeTime: 1
+  maxHalfExtents: {x: 2, y: 4, z: 2}
+  ballLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &664363289
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3389,7 +3392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7349655231179780853, guid: 8a3767cb87c84484886bc411abfdb4f0, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -4780,8 +4783,6 @@ MonoBehaviour:
   rightInCollider: {fileID: 0}
   leftOutCollider: {fileID: 0}
   rightOutCollider: {fileID: 0}
-  leftGround: []
-  rightGround: []
   effectsPlayer1:
   - {fileID: 0}
   effectsPlayer2: []
@@ -4812,6 +4813,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a01d5511a9f2624bb35a7529fdfdcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftGround: []
+  rightGround: []
 --- !u!1001 &1669770503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4952,63 +4955,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8987477675334850098, guid: 9e4fbd2c201835940affd6da06ea99f8, type: 3}
   m_PrefabInstance: {fileID: 1685344821}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1726131971
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 181951554010790902, guid: 1ac6d354ee42252478c02e3575aee06c, type: 3}
-      propertyPath: m_Name
-      value: PlayerPlaceholder
-      objectReference: {fileID: 0}
-    - target: {fileID: 3675289254308234648, guid: 1ac6d354ee42252478c02e3575aee06c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 3675289254308234648, guid: 1ac6d354ee42252478c02e3575aee06c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3675289254308234648, guid: 1ac6d354ee42252478c02e3575aee06c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 66.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3675289254308234648, guid: 1ac6d354ee42252478c02e3575aee06c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3675289254308234648, guid: 1ac6d354ee42252478c02e3575aee06c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3675289254308234648, guid: 1ac6d354ee42252478c02e3575aee06c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3675289254308234648, guid: 1ac6d354ee42252478c02e3575aee06c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3675289254308234648, guid: 1ac6d354ee42252478c02e3575aee06c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3675289254308234648, guid: 1ac6d354ee42252478c02e3575aee06c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3675289254308234648, guid: 1ac6d354ee42252478c02e3575aee06c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1ac6d354ee42252478c02e3575aee06c, type: 3}
 --- !u!1001 &1737055063
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5982,7 +5928,6 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 369339601}
-  - {fileID: 1726131971}
   - {fileID: 484335685}
   - {fileID: 1378224944}
   - {fileID: 1577548717}

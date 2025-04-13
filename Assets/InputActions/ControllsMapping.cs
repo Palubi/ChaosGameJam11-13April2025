@@ -227,15 +227,6 @@ public partial class @ControllsMapping: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Rotation"",
-                    ""type"": ""Value"",
-                    ""id"": ""bf6cd3fb-9f70-435d-a046-072de2179bac"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -315,17 +306,6 @@ public partial class @ControllsMapping: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5cbbb7d5-5acb-4742-a792-d3c60c51d69c"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Rotation"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -343,7 +323,6 @@ public partial class @ControllsMapping: IInputActionCollection2, IDisposable
         m_Player2_Movement = m_Player2.FindAction("Movement", throwIfNotFound: true);
         m_Player2_Shoot = m_Player2.FindAction("Shoot", throwIfNotFound: true);
         m_Player2_Jump = m_Player2.FindAction("Jump", throwIfNotFound: true);
-        m_Player2_Rotation = m_Player2.FindAction("Rotation", throwIfNotFound: true);
     }
 
     ~@ControllsMapping()
@@ -557,7 +536,6 @@ public partial class @ControllsMapping: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player2_Movement;
     private readonly InputAction m_Player2_Shoot;
     private readonly InputAction m_Player2_Jump;
-    private readonly InputAction m_Player2_Rotation;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player2".
     /// </summary>
@@ -581,10 +559,6 @@ public partial class @ControllsMapping: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player2/Jump".
         /// </summary>
         public InputAction @Jump => m_Wrapper.m_Player2_Jump;
-        /// <summary>
-        /// Provides access to the underlying input action "Player2/Rotation".
-        /// </summary>
-        public InputAction @Rotation => m_Wrapper.m_Player2_Rotation;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -620,9 +594,6 @@ public partial class @ControllsMapping: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @Rotation.started += instance.OnRotation;
-            @Rotation.performed += instance.OnRotation;
-            @Rotation.canceled += instance.OnRotation;
         }
 
         /// <summary>
@@ -643,9 +614,6 @@ public partial class @ControllsMapping: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @Rotation.started -= instance.OnRotation;
-            @Rotation.performed -= instance.OnRotation;
-            @Rotation.canceled -= instance.OnRotation;
         }
 
         /// <summary>
@@ -743,12 +711,5 @@ public partial class @ControllsMapping: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnJump(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Rotation" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnRotation(InputAction.CallbackContext context);
     }
 }

@@ -227,4 +227,14 @@ public class Player : MonoBehaviour, ISlowable
             isGrounded = false;
         }
     }
+
+    public void Slow(float amount)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void NotSlow()
+    {
+        throw new System.NotImplementedException();
+    }
 }

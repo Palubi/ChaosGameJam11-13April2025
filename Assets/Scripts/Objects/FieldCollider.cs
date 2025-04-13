@@ -13,7 +13,7 @@ public class FieldCollider : MonoBehaviour, ICollider
     }
     public void Colliding(int player)
     {
-        myGameManager.TouchingGround(player, myCollider);
+       // myGameManager.TouchingGround(player, myCollider);
     }
 
   

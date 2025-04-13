@@ -18,7 +18,7 @@ public class SlowEffect : MonoBehaviour, IActivable
     }
     private void Spawn(GameObject slow)
     {
-        slow.SetActive(true);
+      //  slow.SetActive(true);
     }
 
 }

@@ -12,7 +12,7 @@ public class FunnyBallz : MonoBehaviour, IActivable
 
     private void Spawn()
     {
-        extraBall.SetActive(true);
+       //extraBall.SetActive(true);
     }
 
  

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net.NetworkInformation;
@@ -10,16 +11,18 @@ public class GamePlayManager : MonoBehaviour
 
     private bool hasTouchedGround = false;
 
-    [SerializeField] private Collider Collider; // n ha
+   
     [SerializeField] private Collider leftInCollider;
     [SerializeField] private Collider rightInCollider;
     [SerializeField] private Collider leftOutCollider;
     [SerializeField] private Collider rightOutCollider;
 
+    [SerializeField] private UIManager uiManager;
+
 
 
     [SerializeField] private GameObject[] players;
-    private int[] playersArray = new int[2] { 1, 2 };
+  private int[] playersArray = new int[2] { 1, 2 };
     private int actualPlayer = 0;
 
     [SerializeField] private List<GameObject> effectsPlayer1;
@@ -29,33 +32,79 @@ public class GamePlayManager : MonoBehaviour
 
     [SerializeField] private GameObject ball;
 
+    private void Awake()
+    {
+        Debug.Log("2");
+
+        StartCoroutine(Spawning());
+        Debug.Log("3");
+
+    }
+
+    private IEnumerator Spawning()
+    {
+        while (true)
+        {
+            SpawnBall1();
+
+            Debug.Log("AAAAAAAAAAAAAAAAAAAA");
+            int number = Random.Range(1, 3);
+            Debug.Log("BBBBBBBBBBBBBBBBBBBBBBBBB");
+            if (number == 1)
+            {
+                Debuff(effectsPlayer1, 1);
+            }
+            else if(number == 2) { Debuff(effectsPlayer2, 2); }
+            else {
+                Debug.Log("nao deu !!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    }
+
+                yield return new WaitForSeconds(4f);
+            Debug.Log("REPETIUUUUUU");
+        }
+        
+
+       
+    }
     private void Aleatorio()
     {
         int number = Random.Range(0, players.Length);
-        SpawnBall1(number);
-          
+      //  SpawnBall1(number);
+        print(number);
+        Debug.Log("4");
     }
 
-    private void SpawnBall1(int player)
+    private void SpawnBall1()
     {
-        GameObject newBall = Instantiate(ball, players[player].transform.position, Quaternion.identity);
+        Debug.Log("5");
+        Vector3 posicao = new Vector3(0, 1, 0);
+        GameObject newBall = Instantiate(ball, posicao, Quaternion.identity);
         Rigidbody newBallRigibody =
             newBall.GetComponent<Rigidbody>();
-        newBallRigibody.useGravity = false;
+         // newBallRigibody.useGravity = false;
+        Debug.Log("6");
 
     }
 
 
     private void Debuff(List<GameObject> objectList, int chosenPlayer)    //Touching grouund chama este metodo
     {
-        int index = Random.Range(0, effectzSie);
+        if (objectList.Count > 0)
+        {
+            int index = Random.Range(0, effectzSie);
 
-        objectList[index].TryGetComponent<IActivable>(out IActivable effect);
-        effect.Ativate(chosenPlayer);
-        objectList.RemoveAt(index);
-    }
-    
-    public void TouchingGround( int player, Collider touchedCollider)
+            
+            if (objectList[index].TryGetComponent<IActivable>(out IActivable effect))
+            {
+                effect.Ativate(chosenPlayer);
+            }
+
+            objectList.RemoveAt(index);
+        }
+        
+    }/*
+
+    public void TouchingGround(int player, Collider touchedCollider)
     {
 
         if (touchedCollider == leftInCollider)
@@ -63,29 +112,33 @@ public class GamePlayManager : MonoBehaviour
 
             if (player == 1)
             {
-                // campo proprio perde
+                uiManager.PointBlue();
+                Debuff(effectsPlayer2, 2);
             }
             else
             {
                 if (player == actualPlayer) // segunda vez a tocar no chao com o playr 2
                 {
-                    // ponto pro 2
+                    uiManager.PointBlue();
+                    Debuff(effectsPlayer2, 2);
+
                 }
-                
+                touchedCollider = leftInCollider;
             }
-            touchedCollider = leftInCollider;
         }
         else if (touchedCollider == rightInCollider)
         {
             if (player == 2)
             {
-                // campo proprio perde
+                uiManager.PointRed();
+                Debuff(effectsPlayer1, 1);
             }
             else
             {
                 if (player == actualPlayer) // segunda vez a tocar no chao com o playr 2
                 {
-                    // ponto pro 1
+                    uiManager.PointRed();
+                    Debuff(effectsPlayer1, 1);
                 }
             }
             touchedCollider = rightInCollider;
@@ -94,11 +147,13 @@ public class GamePlayManager : MonoBehaviour
         {
             if (player == 1)
             {
-                // ponto pro player 2
+                uiManager.PointBlue();
+                Debuff(effectsPlayer2, 2);
             }
             else
             {
-                //  ponto pro player 1
+                uiManager.PointRed();
+                Debuff(effectsPlayer1, 1);
             }
             touchedCollider = leftOutCollider;
         }
@@ -107,52 +162,20 @@ public class GamePlayManager : MonoBehaviour
             touchedCollider = rightOutCollider;
         }
 
-        if (actualPlayer != playersArray[player]) // signific que ja tocou uma vez no chao
-        {
-            //other ganha um ponto
-        }
-
-        actualPlayer = player;
-
-        // se plyer for igua ao campo do proprio player
 
 
 
 
+            actualPlayer = player; 
+    } 
+    */
 
-     
-        
-        
-        
-        
-        
-        
-        ///
-        /// 
-        /// if (isRunning)  //ja tinha tocado 1 vez
-        /// {
-       /// isRunning = false;
-    }
-        ///else          // primeiro toque no chão
-       /// {isRunning = true; actualPlayer = players[player]; }
-        
-    
 
-    private void Awake()
+
+    private void OnDestroy()
     {
-
+        Debug.LogWarning(gameObject.name + " foi destruído!");
+        Debug.Break();
     }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
-
-
 
 }

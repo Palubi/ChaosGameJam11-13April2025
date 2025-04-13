@@ -6,7 +6,7 @@ public class UIManager: MonoBehaviour
 {
     private int scorePlayer1 = 0;
     private int scorePlayer2 = 0;
-    [SerializeField] private int victoryScore;
+   private int victoryScore=4;
 
     [SerializeField] private List<GameObject> redPoints;    //1
     [SerializeField] private List<GameObject> bluePoints;   //2
